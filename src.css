@@ -1,0 +1,25 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 5%;
+}
+
+#map {
+	height: 100%;
+}
+
+#search {
+	padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 300px;
+    margin-top: 10px;
+    height: 25px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/*#list {
+	display: flex;
+	flex-wrap: wrap;
+}*/
+
