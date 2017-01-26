@@ -10,7 +10,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/app.css">
+	<link rel="stylesheet" href="css/app.css">
 </head>
 <body>
 	 <header>
@@ -27,12 +27,11 @@
 			</ul>
 		</div>
 	</div>
-	<div id ="map">
-	</div>
+	<main id ="map"></main>
+	<div id = "map-error" class="map-error"></div>
 
 <script src="js/app.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj_tDesKmr01G7wWzwLp3lRtVz0v6H0Fs&libraries=places&callback=initAutocomplete"
-     async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj_tDesKmr01G7wWzwLp3lRtVz0v6H0Fs&libraries=places&callback=initAutocomplete" onerror="mapError()" async defer></script>
 </body>
 </html>
