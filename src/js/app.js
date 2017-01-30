@@ -1,99 +1,99 @@
 // places of interest used in the app
 var poi = [
 {
-  "name": "Golden Gate Bridge",
-  "location": {"lat": 37.79696069999999, "lng": -122.47480310000003},
-  "fs_id": "49d01698f964a520fd5a1fe3"
+  'name': 'Golden Gate Bridge',
+  'location': {'lat': 37.79696069999999, 'lng': -122.47480310000003},
+  'fs_id': '49d01698f964a520fd5a1fe3'
 },
 {
-  "name": "San Francisco Chinatown",
-  "location": {"lat": 37.794565, "lng": -122.40782999999999},
-  "fs_id": "584f4665a370b9190d30e54a"
+  'name': 'San Francisco Chinatown',
+  'location': {'lat': 37.794565, 'lng': -122.40782999999999},
+  'fs_id': '584f4665a370b9190d30e54a'
 },
 {
-  "name": "Coit Tower",
-  "location": {"lat": 37.8023949, "lng": -122.40582219999999},
-  "fs_id": "49de821ff964a5205c601fe3"
+  'name': 'Coit Tower',
+  'location': {'lat': 37.8023949, 'lng': -122.40582219999999},
+  'fs_id': '49de821ff964a5205c601fe3'
 },
 {
-  "name": "Painted Ladies",
-  "location": {"lat": 37.77625929999999, "lng": -122.43275800000004},
-  "fs_id": "4b9afa7ef964a520c1e835e3"
+  'name': 'Painted Ladies',
+  'location': {'lat': 37.77625929999999, 'lng': -122.43275800000004},
+  'fs_id': '4b9afa7ef964a520c1e835e3'
 },
 {
-  "name": "The San Francisco Dungeon",
-  "location": {"lat": 37.8082296, "lng": -122.41472899999997},
-  "fs_id": "53a1e875498e85bda62c69f3"
+  'name': 'The San Francisco Dungeon',
+  'location': {'lat': 37.8082296, 'lng': -122.41472899999997},
+  'fs_id': '53a1e875498e85bda62c69f3'
 },
 {
-  "name": "Mission San Francisco de Asís",
-  "location": {"lat": 37.7643873, "lng": -122.42689689999997},
-  "fs_id": "49f621e3f964a520096c1fe3"
+  'name': 'Mission San Francisco de Asís',
+  'location': {'lat': 37.7643873, 'lng': -122.42689689999997},
+  'fs_id': '49f621e3f964a520096c1fe3'
 },
 {
-  "name": "Fort Point",
-  "location": {"lat": 37.8105867, "lng": -122.47710660000001},
-  "fs_id": "46dabca2f964a5207c4a1fe3"
+  'name': 'Fort Point',
+  'location': {'lat': 37.8105867, 'lng': -122.47710660000001},
+  'fs_id': '46dabca2f964a5207c4a1fe3'
 },
 {
-  "name": "Twin Peaks Stairs",
-  "location": {"lat": 37.7525098, "lng": -122.4475683},
-  "fs_id": "535687e0498e0030a30beefa"
+  'name': 'Twin Peaks Stairs',
+  'location': {'lat': 37.7525098, 'lng': -122.4475683},
+  'fs_id': '535687e0498e0030a30beefa'
 },
 {
-  "name": "The Wave Organ",
-  "location": {"lat": 37.8085184, "lng": -122.44022100000001},
-  "fs_id": "49df9416f964a520e7601fe3"
+  'name': 'The Wave Organ',
+  'location': {'lat': 37.8085184, 'lng': -122.44022100000001},
+  'fs_id': '49df9416f964a520e7601fe3'
 },
 {
-  "name": "Pier 39",
-  "location": {"lat": 37.808673, "lng": -122.40982099999997},
-  "fs_id": "409d7480f964a520f2f21ee3"
+  'name': 'Pier 39',
+  'location': {'lat': 37.808673, 'lng': -122.40982099999997},
+  'fs_id': '409d7480f964a520f2f21ee3'
 },
 {
-  "name": "San Francisco Zoo",
-  "location": {"lat": 37.73297429999999, "lng": -122.50284069999998},
-  "fs_id": "49ca9423f964a520c0581fe3"
+  'name': 'San Francisco Zoo',
+  'location': {'lat': 37.73297429999999, 'lng': -122.50284069999998},
+  'fs_id': '49ca9423f964a520c0581fe3'
 },
 {
-  "name": "Bay Area Discovery Museum",
-  "location": {"lat": 37.83564, "lng": -122.476809},
-  "fs_id": "43b02b7bf964a520932c1fe3"
+  'name': 'Bay Area Discovery Museum',
+  'location': {'lat': 37.83564, 'lng': -122.476809},
+  'fs_id': '43b02b7bf964a520932c1fe3'
 },
 {
-  "name": "Legion of Honor",
-  "location": {"lat": 37.7844661, "lng": -122.50084190000001},
-  "fs_id": "44d344bef964a52041361fe3"
+  'name': 'Legion of Honor',
+  'location': {'lat': 37.7844661, 'lng': -122.50084190000001},
+  'fs_id': '44d344bef964a52041361fe3'
 },
 {
-  "name": "Golden Gate Park",
-  "location": {"lat": 37.7694208, "lng": -122.48621379999997},
-  "fs_id": "445e36bff964a520fb321fe3"
+  'name': 'Golden Gate Park',
+  'location': {'lat': 37.7694208, 'lng': -122.48621379999997},
+  'fs_id': '445e36bff964a520fb321fe3'
 },
 {
-  "name": "Crissy Field",
-  "location": {"lat": 37.8039069, "lng": -122.46406179999997},
-  "fs_id": "40b7d280f964a52093001fe3"
+  'name': 'Crissy Field',
+  'location': {'lat': 37.8039069, 'lng': -122.46406179999997},
+  'fs_id': '40b7d280f964a52093001fe3'
 },
 {
-  "name": "Sutro Baths",
-  "location": {"lat": 37.7804369, "lng": -122.51369349999999},
-  "fs_id": "4a05e6dbf964a52098721fe3"
+  'name': 'Sutro Baths',
+  'location': {'lat': 37.7804369, 'lng': -122.51369349999999},
+  'fs_id': '4a05e6dbf964a52098721fe3'
 },
 {
-  "name": "Musée Mécanique",
-  "location": {"lat": 37.8093405, "lng": -122.41606089999999},
-  "fs_id": "4698e95ef964a520f4481fe3"
+  'name': 'Musée Mécanique',
+  'location': {'lat': 37.8093405, 'lng': -122.41606089999999},
+  'fs_id': '4698e95ef964a520f4481fe3'
 },
 {
-  "name": "San Francisco Museum of Modern Art",
-  "location": {"lat": 37.7857182, "lng": -122.40105080000001},
-  "fs_id": "40943a00f964a520e5f21ee3"
+  'name': 'San Francisco Museum of Modern Art',
+  'location': {'lat': 37.7857182, 'lng': -122.40105080000001},
+  'fs_id': '40943a00f964a520e5f21ee3'
 },
 {
-  "name": "Alcatraz Island",
-  "location": {"lat": 37.8266, "lng": -122.4229},
-  "fs_id": "4451c80ef964a520a5321fe3"
+  'name': 'Alcatraz Island',
+  'location': {'lat': 37.8266, 'lng': -122.4229},
+  'fs_id': '4451c80ef964a520a5321fe3'
 }
 ]
 
