@@ -95,8 +95,12 @@ var poi = [
   'location': {'lat': 37.8266, 'lng': -122.4229},
   'fs_id': '4451c80ef964a520a5321fe3'
 }
-]
+];
 
+function mapError() {
+	document.getElementById('map-error').style.display = 'block';
+	document.getElementById('map-error').innerHTML = 'Sorry, something went wrong!. Please try again later.';
+}
 
 function initAutocomplete() {
 
@@ -110,6 +114,18 @@ function initAutocomplete() {
 	    // The anchor for this image is the base of the flagpole at (0, 32).
 	    "anchor": new google.maps.Point(0, 32)
 	};
+
+	// Create custom map icon
+	var image1 = {
+	    "url": "img/tourIconActive.png",
+	    // This marker is 32 pixels wide by 32 pixels high.
+	    "size": new google.maps.Size(48, 48),
+	    // The origin for this image is (0, 0).
+	    "origin": new google.maps.Point(0, 0),
+	    // The anchor for this image is the base of the flagpole at (0, 32).
+	    "anchor": new google.maps.Point(0, 32)
+	};
+
 
 	var loc = {lat: 37.7749, lng: -122.4194};
 	//create the map
@@ -189,19 +205,10 @@ function initAutocomplete() {
 		map.setCenter(center);
 	});
 
-
-	function mapError() {
-		document.getElementById('map-error').style.display = 'block';
-    	document.getElementById('map-error').innerHTML = 'Sorry, something went wrong. Please try again later.';
-
-	}
-
 	// close the infowindow when clicked anywhere else
 	map.addListener('click', function(){
 	    infoWindow.close(infoWindow);
 	});
-
-	var markers = [];
 
 	function ViewModel() {
 	    var self = this;
@@ -219,21 +226,9 @@ function initAutocomplete() {
 	      	this.isNavClosed(!this.isNavClosed());
 	    };
 
+
 		// create a marker for each poi
 		this.placeList().forEach(function(place) {
-			/*console.log(place);
-			// compute address parameter from the result
-			var address = place.formatted_address;
-			var addressFormat = '';
-			address.forEach(function(item) {
-				var last = address.length;
-				if(item == address[last-1]) {
-					addressFormat += item + '.<br>'
-				}
-				else {
-					addressFormat += item + ',<br>';
-				}
-			});*/
 			var marker = new google.maps.Marker({
 				map: map,
 				name: place.name,
@@ -241,22 +236,42 @@ function initAutocomplete() {
 				icon: image,
 				animation: google.maps.Animation.DROP
 			});
+
 			place.marker = marker;
+			// Extend the boundaries of the map for each marker
 			bounds.extend(marker.position);
 			// onclick event for a marker
 			marker.addListener('click', function() {
+				marker.setIcon(image1);
 				setInfoWindow(marker);
 			});
 		});
 
 		function setInfoWindow(marker) {
+
+			 if(infoWindow.marker){
+		        //if any marker is already open, change its color to the default color
+		        infoWindow.marker.setIcon(image);
+		    }
+
+		     // Check to make sure the infowindow is not already opened on this marker.
+		    if (infoWindow.marker != marker) {
+
+		        infoWindow.marker = marker;
+		        // Make sure the marker property is cleared if the infowindow is closed.
+		        infoWindow.addListener('closeclick',function(){
+		            infoWindow.marker = null;
+		            marker.setIcon(image);
+		        });
+		    }
+
 			console.log(marker.position);
 			//set infowindow
 			map.panTo(marker.position);
 			//pan down infowindow by 200px to keep whole infowindow on screen
-			map.panBy(0, -200)
+			map.panBy(0, -200);
 
-			if (marker == '') {
+			if (marker === '') {
 				infoWindow.setContent('Oops!, Nothing Loaded!!');
 			}
 			else {
@@ -264,29 +279,35 @@ function initAutocomplete() {
 				self.locationList().forEach(function(item) {
 					if(item.name.includes(marker.name)) {
 						// compute the rating to implement stars
-						var ratingResult = 1;
-						ratingResult = item.rating * 15;
-						ratingResult = ratingResult.toString();
+						var ratingResult = 1, warning = '';
+						if(item.rating) {
+							ratingResult = (item.rating * 10).toString();
+						}
+						else {
+							warning = 'No rating given';
+						}
+
+						
 						// compute address parameter from the result
 						var address = item.formatted_address;
 						var addressFormat = '';
 						address.forEach(function(addr) {
 							var last = address.length;
 							if(addr == address[last-1]) {
-								addressFormat += addr + '.<br>'
+								addressFormat += addr + '.<br>';
 							}
 							else {
 								addressFormat += addr + ',<br>';
 							}
 						});
-						infoWindow.setContent('<h5>' + item.name + '</h5>' + '<p>' + addressFormat + '</p><br><div><img style="position: absolute; top:170px;left: 50px;" src="' + item.photos + '"/></div><br>' +  '<div class="star-box" style="">Rating: ' + 
+						infoWindow.setContent('<h5>' + item.name + '</h5>' + '<p>' + addressFormat + '</p><br><div><img style="position: absolute; top:170px;left: 50px;" src="' + item.photos + '"/></div><br>' +  '<div class="star-box">Rating: <br>' + warning + '<br>' + 
 						   '<span class="unfilled" style="color:#d3d3d3; position: absolute;top: 165px;left: 30px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>' + 
 						   '<span class="filled" style="color:#FFBB00; white-space: nowrap; overflow: hidden;position: absolute;top: 165px;left: 30px;width:' + ratingResult + 'px">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>');
 						infoWindow.open(map, marker);
 					}
 				});
 			}
-		};
+		}
 
 		//get data from foursquare API
 	    self.get_fs_data = ko.computed(function(){
@@ -303,17 +324,19 @@ function initAutocomplete() {
 						var position = {};
 						position.lat = data.response.venue.location.lat;
 						position.lng = data.response.venue.location.lng;
-		        		var locate = new Object();
-						locate.formatted_address = new Object();
+		        		var locate = {};
+						locate.formatted_address = {};
 						locate.formatted_address = data.response.venue.location.formattedAddress;
-						locate.name = data.response.venue['name'];
+						locate.name = data.response.venue.name;
 						locate.position = position;
-						if(data.response.venue.rating != undefined) {
-							locate.rating = (data.response.venue.rating).toString();
-						};
-						locate.photos = data.response.venue.bestPhoto['prefix'] + 'height150' + data.response.venue.bestPhoto['suffix'];
+						locate.rating = (data.response.venue.rating !== undefined) 
+										? (data.response.venue.rating).toString() : false;
+						locate.photos = data.response.venue.bestPhoto.prefix + 'height150' + data.response.venue.bestPhoto.suffix;
 						self.locationList.push(locate);
 						console.log(self.locationList());
+					},
+					error: function() {
+						mapError();
 					}
 		    	});
 			});
@@ -326,54 +349,43 @@ function initAutocomplete() {
 		// empty the input box when the remove icon is clicked
 		this.emptyInputBox = function() {
 			this.filter('');
+			infoWindow.marker.setIcon(image);
 			infoWindow.close(infoWindow);
 		};
 		
 	    // Creating click for the list item
 	    this.itemClick = function (place) {
 	    	var marker = place.marker;
+	    	marker.setIcon(image1);
 			// Bounce effect on marker
 			marker.setAnimation(google.maps.Animation.BOUNCE);
 			window.setTimeout(function() {
 				marker.setAnimation(null);
-			}, 2000);
+			}, 1400);
 			//setInfoWindow(marker);
 	        google.maps.event.trigger(marker, 'click');
-	    }
-
-	    this.setMapNull = function() {
-	    	self.placeList().forEach(function(item) {
-	    		item.marker.setMap(null);
-	    	});
-	    }
-
-	    this.setMapFull = function() {
-	    	self.placeList().forEach(function(item) {
-	    		item.marker.setMap(map);
-	    	});
-	    }
+	    };
 
 	    this.filteredplaceList = ko.dependentObservable(function() {
 			var q = this.filter().toLowerCase();
 			if (!q) {
-				self.setMapFull();
 				// Return self.spaceList() the original array;
 				return ko.utils.arrayFilter(self.placeList(), function(item) {
+        				item.marker.setVisible(true);
 						return true;
 				});
 			} else {
-				self.setMapNull();
 				return ko.utils.arrayFilter(this.placeList(), function(item) {
-					if (item.name.toLowerCase().indexOf(q) == 0) {
-						item.marker.setMap(map);	
+					if (item.name.toLowerCase().indexOf(q) === 0) {	
 						return true;
 					} else {
+						item.marker.setVisible(false);
 						return false;
 					}
 				});
 			}
 		}, this);
-	};
+	}
 
 	ko.applyBindings(new ViewModel());
-};
+}
