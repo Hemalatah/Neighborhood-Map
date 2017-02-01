@@ -250,20 +250,20 @@ function initAutocomplete() {
 		function setInfoWindow(marker) {
 
 			 if(infoWindow.marker){
-		        //if any marker is already open, change its color to the default color
-		        infoWindow.marker.setIcon(image);
-		    }
+				//if any marker is already open, change its color to the default color
+		        	infoWindow.marker.setIcon(image);
+		   	 }
 
-		     // Check to make sure the infowindow is not already opened on this marker.
-		    if (infoWindow.marker != marker) {
+		     	// Check to make sure the infowindow is not already opened on this marker.
+		    	if (infoWindow.marker != marker) {
 
-		        infoWindow.marker = marker;
-		        // Make sure the marker property is cleared if the infowindow is closed.
-		        infoWindow.addListener('closeclick',function(){
-		            infoWindow.marker = null;
-		            marker.setIcon(image);
-		        });
-		    }
+		        	infoWindow.marker = marker;
+		        	// Make sure the marker property is cleared if the infowindow is closed.
+		        	infoWindow.addListener('closeclick',function(){
+		            		infoWindow.marker = null;
+		            		marker.setIcon(image);
+		        	});
+		  	}
 
 			console.log(marker.position);
 			//set infowindow
