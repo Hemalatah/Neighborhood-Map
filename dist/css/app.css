@@ -1,5 +1,6 @@
-html, body {
-	font-family: 'Indie Flower', cursive;
+html, 
+body {
+	font-family: "Indie Flower", cursive;
 	height: 100%;
 	margin: 0;
 	padding: 0;
@@ -36,12 +37,12 @@ header {
 #search {
 	position: absolute;
 	padding: 0 11px 0 13px;
-    text-overflow: ellipsis;
-    width: 200px;
-    margin: 10px 0 0 20px;
-    height: 25px;
-    font-size: 15px;
-    outline: none;
+  text-overflow: ellipsis;
+  width: 200px;
+  margin: 10px 0 0 20px;
+  height: 25px;
+  font-size: 15px;
+  outline: none;
 }
 
 .glyphicon-remove {
@@ -83,6 +84,19 @@ header {
 #map {
 	padding-top: 50px;
 	height: 650px;
+}
+
+.map-error {
+  max-width: 100%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background: #f7f7f7;
+  color: #333;
+  padding: 40px;
+  text-shadow: 2px 2px yellow;
+  font-size: 25px;
+  display: none;
 }
 
 .gm-style .gm-style-iw {
