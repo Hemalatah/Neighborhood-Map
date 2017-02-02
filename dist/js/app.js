@@ -249,9 +249,14 @@ function initAutocomplete() {
 
 		function setInfoWindow(marker) {
 
-			 if(infoWindow.marker){
+			if(infoWindow.marker){
 		        //if any marker is already open, change its color to the default color
 		        infoWindow.marker.setIcon(image);
+		    }
+
+		    if(infoWindow.marker && infoWindow.marker === marker){
+		        //if any marker is already open, change its color to the default color
+		        infoWindow.marker.setIcon(image1);
 		    }
 
 		     // Check to make sure the infowindow is not already opened on this marker.
@@ -265,7 +270,6 @@ function initAutocomplete() {
 		        });
 		    }
 
-			console.log(marker.position);
 			//set infowindow
 			map.panTo(marker.position);
 			//pan down infowindow by 200px to keep whole infowindow on screen
@@ -275,7 +279,6 @@ function initAutocomplete() {
 				infoWindow.setContent('Oops!, Nothing Loaded!!');
 			}
 			else {
-				console.log(marker.name);
 				self.locationList().forEach(function(item) {
 					if(item.name.includes(marker.name)) {
 						// compute the rating to implement stars
@@ -319,26 +322,24 @@ function initAutocomplete() {
 		                                'client_id=' + foursquareCredentials.CLIENT_ID +
 		                                '&client_secret=' + foursquareCredentials.CLIENT_SECRET + '&v=20170127',
 					method: 'GET',
-					dataType: 'json',
-					success: function(data){
-						var position = {};
-						position.lat = data.response.venue.location.lat;
-						position.lng = data.response.venue.location.lng;
-		        		var locate = {};
-						locate.formatted_address = {};
-						locate.formatted_address = data.response.venue.location.formattedAddress;
-						locate.name = data.response.venue.name;
-						locate.position = position;
-						locate.rating = (data.response.venue.rating !== undefined) 
-										? (data.response.venue.rating).toString() : false;
-						locate.photos = data.response.venue.bestPhoto.prefix + 'height150' + data.response.venue.bestPhoto.suffix;
-						self.locationList.push(locate);
-						console.log(self.locationList());
-					},
-					error: function() {
-						mapError();
-					}
-		    	});
+					dataType: 'json'})
+				.done(function(data){
+					var position = {};
+					position.lat = data.response.venue.location.lat;
+					position.lng = data.response.venue.location.lng;
+	        		var locate = {};
+					locate.formatted_address = {};
+					locate.formatted_address = data.response.venue.location.formattedAddress;
+					locate.name = data.response.venue.name;
+					locate.position = position;
+					locate.rating = (data.response.venue.rating !== undefined) 
+									? (data.response.venue.rating).toString() : false;
+					locate.photos = data.response.venue.bestPhoto.prefix + 'height150' + data.response.venue.bestPhoto.suffix;
+					self.locationList.push(locate);
+				})
+				.fail(function() {
+					mapError();
+				});
 			});
 	  	});
 
@@ -347,14 +348,14 @@ function initAutocomplete() {
 	    self.filter = ko.observable('');
 
 		// empty the input box when the remove icon is clicked
-		this.emptyInputBox = function() {
+		self.emptyInputBox = function() {
 			this.filter('');
 			infoWindow.marker.setIcon(image);
 			infoWindow.close(infoWindow);
 		};
 		
 	    // Creating click for the list item
-	    this.itemClick = function (place) {
+	    self.itemClick = function (place) {
 	    	var marker = place.marker;
 	    	marker.setIcon(image1);
 			// Bounce effect on marker
@@ -366,25 +367,14 @@ function initAutocomplete() {
 	        google.maps.event.trigger(marker, 'click');
 	    };
 
-	    this.filteredplaceList = ko.dependentObservable(function() {
-			var q = this.filter().toLowerCase();
-			if (!q) {
-				// Return self.spaceList() the original array;
-				return ko.utils.arrayFilter(self.placeList(), function(item) {
-        				item.marker.setVisible(true);
-						return true;
-				});
-			} else {
-				return ko.utils.arrayFilter(this.placeList(), function(item) {
-					if (item.name.toLowerCase().indexOf(q) === 0) {	
-						return true;
-					} else {
-						item.marker.setVisible(false);
-						return false;
-					}
-				});
-			}
-		}, this);
+	    self.filteredplaceList = ko.dependentObservable(function() {
+			var q = self.filter().toLowerCase();
+			return ko.utils.arrayFilter(self.placeList(), function(item) {
+			  var match = !q || item.name.toLowerCase().indexOf(q) !== -1;
+			  item.marker.setVisible(match);
+			  return match;
+			});
+		}, self);
 	}
 
 	ko.applyBindings(new ViewModel());
